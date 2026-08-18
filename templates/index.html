@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Querill AI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-[#0b0f19] text-slate-100 font-sans min-h-screen flex">
+
+    <!-- Sidebar Controls -->
+    <aside class="w-80 bg-[#0f172a] border-r border-slate-800 p-6 flex flex-col justify-between">
+        <div>
+            <div class="flex items-center gap-3 mb-8">
+                <span class="text-3xl">🧐</span>
+                <h1 class="text-2xl font-black text-sky-400 tracking-tight">Querill AI</h1>
+            </div>
+
+            <!-- HTMX Form Upload -->
+            <form hx-post="/process" 
+                  hx-target="#workspace" 
+                  hx-swap="innerHTML"
+                  hx-indicator="#upload-spinner" 
+                  enctype="multipart/form-data" 
+                  hx-on::before-request="document.getElementById('workspace').innerHTML = ''"
+                  class="space-y-4">
+                
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">Upload PDF Document</label>
+                    <input type="file" name="file" accept=".pdf" required 
+                           class="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-500/10 file:text-sky-400 hover:file:bg-sky-500/20 cursor-pointer bg-slate-900 border border-slate-800 rounded-xl p-2">
+                </div>
+
+                <div class="space-y-4 border-t border-slate-800/80 pt-6">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Settings</h3>
+                    <div>
+                        <label class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Flashcards</span>
+                            <span id="fc-val" class="font-bold text-sky-400">5</span>
+                        </label>
+                        <input type="range" name="flashcards" min="1" max="15" value="5" 
+                               oninput="document.getElementById('fc-val').innerText = this.value" 
+                               class="w-full accent-sky-400">
+                    </div>
+                    <div>
+                        <label class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Practice Questions</span>
+                            <span id="pq-val" class="font-bold text-sky-400">5</span>
+                        </label>
+                        <input type="range" name="questions" min="1" max="15" value="5" 
+                               oninput="document.getElementById('pq-val').innerText = this.value" 
+                               class="w-full accent-sky-400">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl transition duration-200">
+                    Process Workspace
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 p-10 max-w-6xl mx-auto overflow-y-auto">
+        <div id="upload-spinner" class="htmx-indicator flex flex-col items-center justify-center my-auto py-20 bg-slate-900/50 border border-slate-800/80 rounded-2xl shadow-xl space-y-4">
+            <div class="animate-spin rounded-full h-10 w-10 border-4 border-sky-400 border-t-transparent shadow-lg"></div>
+            <div class="text-center">
+                <span class="text-sm font-bold text-sky-400 tracking-wide block">Analyzing Document with AI</span>
+                <span class="text-xs text-slate-500">Generating summaries, mind maps, vector embeddings & flashcards...</span>
+            </div>
+        </div>
+        <!--<div id="loading" class="htmx-indicator hidden flex items-center justify-center p-12">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-sky-400"></div>
+            <span class="ml-4 text-sky-400 font-semibold">Analyzing document with AI...</span>
+        </div>-->
+
+        <div id="workspace" class="space-y-8">
+            <div class="p-10 bg-slate-900/50 border border-slate-800/80 rounded-2xl text-center space-y-3">
+                <span class="text-4xl">📄</span>
+                <h2 class="text-xl font-bold text-slate-200">No Document Loaded</h2>
+                <p class="text-slate-400 text-sm max-w-md mx-auto">
+                    Select a document from the sidebar to generate instant summaries, flowcharts, flashcards, and intelligent reasoning Q&A.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <style>
+    /* Displays the spinner whenever an HTMX request is active */
+        .htmx-indicator {
+            display: none !important;
+        }
+        .htmx-request .htmx-indicator,
+        .htmx-request.htmx-indicator {
+            display: flex !important;
+        }
+    </style>
+    <!--<style>
+        .htmx-indicator { display: none; }
+        .htmx-request .htmx-indicator { display: flex; }
+        .htmx-request.htmx-indicator { display: flex; }
+    </style>-->
+</body>
+</html>
