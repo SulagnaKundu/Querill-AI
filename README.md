@@ -1,4 +1,13 @@
 
+---
+title: Querill AI
+emoji: ⚡
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
 # ⚡ Querill AI
 
 Querill AI is a high-performance Retrieval-Augmented Generation (RAG) engine designed for fast, grounded, and resilient context processing from complex PDF documents.
