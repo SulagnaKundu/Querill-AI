@@ -1,5 +1,4 @@
 
-```markdown
 # ⚡ Querill AI
 
 Querill AI is a high-performance Retrieval-Augmented Generation (RAG) engine designed for fast, grounded, and resilient context processing from complex PDF documents.
@@ -64,6 +63,3 @@ Open your browser and navigate to `http://127.0.0.1:8000`.
 3. **Similarity Search**: Queries hit ChromaDB vector store using `k=3` cosine distance matching with expanded context queries.
 4. **Context Ingestion**: Matching chunks synthesized by `resilient_ai_call` to produce grounded structured answers.
 
-```
-
-```
